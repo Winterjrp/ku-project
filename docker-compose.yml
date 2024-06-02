@@ -1,41 +1,5 @@
 version: "4.29"
 services:
-  petfoodreccomendation.mysql.database:
-    image: puifaiiwimonmanee/nutrition_application:database
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: UZ6Qwo&|^h0*M9/
-      MYSQL_DATABASE: petfoodreccomendation
-      MYSQL_USER: myadmin
-      MYSQL_PASSWORD: UZ6Qwo&|^h0*M9/
-    container_name: mysql-petfoodreccomendation_container
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    command: --authentication_policy=mysql_native_password
-    ports:
-      - "3307:3306"
-    expose:
-      - 3306
-  api-server:
-    image: puifaiiwimonmanee/nutrition_application:backend
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: server-petfoodreccomendation_container
-    ports:
-      - "3000:3000"
-    expose:
-      - "3000"
-    depends_on:
-      - petfoodreccomendation.mysql.database
-    environment:
-      DB_HOST: petfoodreccomendation.mysql.database
-      DB_USER: myadmin
-      DB_PASSWORD: "UZ6Qwo&|^h0*M9/"
-      DB_NAME: petfoodreccomendation
-    volumes:
-      - .:/app/server
-      - /app/server/node_modules
   frontend:
     build:
       context: ./
